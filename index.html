@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: darkolivegreen;
+    color: white;
+   
+}
+
+.section {
+    width: 80%;
+    margin: 50px auto; 
+    padding: 30px;
+    font-size: 20px;
+    line-height: 35px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about_section {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: blue;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+label, input, textarea, button {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+button {
+    background-color: darkorchid;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+.result {
+    color:darkred;
+    margin-top: 10px;
+}
+
+nav {
+    background-color: darkslategray;
+    padding: 10px;
+    height: 80px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    padding-top: 30px;
+}
+
+.nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-list li {
+    margin: 0 15px;
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.nav-list a:hover {
+    color: lightgreen;
+}
+
+    </style>
+    <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
+    <title>Healthcare Clinic Project</title>
+</head>
+<body>
+    <!---------------- Navigation Bar ---------------->
+    <nav>
+        <ul class="nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#bmi-calculator">BMI Calculator</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!---------------- Header Section ---------------->
+    <header id="home">
+        <h1>Welcome Healthcare Clinic Project</h1><br>
+        <p>Your Health, First Priority</p>
+    </header>
+
+    <!------------------ About Section ---------------------------->
+    <section id="about-us" class="section" style="background-color: lightgreen;">
+        <h2 class="about_section">About Us</h2>
+        <p>At our clinic, we are committed to delivering high-quality healthcare services tailored to support your overall health and wellness. With a compassionate team and state-of-the-art facilities, we prioritize your health, comfort, and satisfaction.</p>
+    </section>
+
+    <!----------------- BMI Calculator Section ---------------->
+    <section id="bmi-calculator" class="section" style="background-color: lightcoral;">
+        <h2 class="about_section">BMI Calculator</h2>
+        <form onsubmit="calculateBMI(event)" class="form">
+            <label for="weight">Weight (kilogram):</label>
+            <input type="number" id="weight" placeholder="Enter Your Weight" required>
+            <label for="height">Height (centimeter):</label>
+            <input type="number" id="height" placeholder="Enter Your Height" required>
+            <button type="submit">Click the btn Final BMI</button>
+        </form>
+        <p id="bmi-result" class="result"></p>
+    </section>
+
+    <!--------------- Contact Form Section --------------->
+    <section id="contact" class="section" style="background-color: lightblue;">
+        <h2 class="about_section">Contact Us</h2>
+        <form onsubmit="submitContactForm(event)" class="form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter Your Name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter Your Email" required>
+            <label for="message">Message:</label>
+            <textarea id="message" placeholder="Enter Your Message" required></textarea>
+            <button type="submit">Submit Result</button>
+        </form>
+        <p id="form-response" class="result"></p>
+    </section>
+
+    <!------------------ Javascript Link --------------------->
+    <!-- <script src="./assets/js/script.js"></script> -->
+     <script>
+        
+window.addEventListener("scroll", () => {
+    document.querySelectorAll(".section").forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop < window.innerHeight) {
+            section.classList.add("show");
+        }
+    });
+});
+
+
+function calculateBMI(event) {
+    event.preventDefault();
+    const weight = parseFloat(document.getElementById("weight").value);
+    const height = parseFloat(document.getElementById("height").value) / 100; // convert cm to meters
+    if (weight > 0 && height > 0) {
+        const bmi = (weight / (height * height)).toFixed(2);
+        document.getElementById("bmi-result").textContent = `Your BMI is ${bmi}`;
+    } else {
+        document.getElementById("bmi-result").textContent = "Please enter valid weight and height.";
+    }
+}
+
+function submitContactForm(event) {
+    event.preventDefault();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+    if (name && email && message) {
+        document.getElementById("form-response").textContent = "Thank you! Your message has been sent.";
+    } else {
+        document.getElementById("form-response").textContent = "Please fill out all fields.";
+    }
+}
+
+     </script>
+</body>
+</html>
